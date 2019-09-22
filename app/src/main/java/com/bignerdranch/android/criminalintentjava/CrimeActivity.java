@@ -14,7 +14,7 @@ import java.util.UUID;
 public class CrimeActivity extends SingleFragmentActivity {
 
     //When CrimeActivity is started, pass crime ID as Intent extra to tell CrimeFragment which Crime to display
-    public static final String EXTRA_CRIME_ID =
+    private static final String EXTRA_CRIME_ID =
             "com.bignerdranch.android.criminalintentjava.crime_id";
     public static Intent newIntent(Context packageContext, UUID crimeId) {
         Intent intent = new Intent(packageContext, CrimeActivity.class);
@@ -22,8 +22,11 @@ public class CrimeActivity extends SingleFragmentActivity {
         return intent;
     }
 
+    //calls CrimeFragment.newInstance(UUID) when it needs a new CrimeFragment
    @Override
     protected Fragment createFragment() {
-       return new CrimeFragment();
+       UUID crimeId = (UUID) getIntent()
+               .getSerializableExtra(EXTRA_CRIME_ID);
+       return CrimeFragment.newInstance(crimeId);
    }
 }

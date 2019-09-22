@@ -16,6 +16,9 @@ import androidx.fragment.app.Fragment;
 import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
+
+    private static final String ARG_CRIME_ID = "crime_id";
+
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
@@ -26,11 +29,21 @@ public class CrimeFragment extends Fragment {
     //The Bundle will contain data that this method can use to re-create the view from a saved state.
 
     //retrieve extra from activity with UUID, then use it to fetch Crime from Crimelab
+
+
+    //accepts UUID, creates a fragment instance with attached arg bundle
+    public static CrimeFragment newInstance(UUID crimeId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CRIME_ID, crimeId);
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID crimeId = (UUID) getActivity().getIntent()
-                .getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
+        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
     }
 
@@ -61,9 +74,6 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-
-
-
         mDateButton = v.findViewById(R.id.crime_date);
         mDateButton.setText(mCrime.getDate().toString());
         mDateButton.setEnabled(false);
@@ -79,11 +89,10 @@ public class CrimeFragment extends Fragment {
         });
 
 
-
-
-
-
         return v;
     }
+
+
+
 
 }
