@@ -55,6 +55,15 @@ public class CrimeFragment extends Fragment {
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
     }
 
+    //Crime instances get modified in CrimeFragment and will need to be written out when CrimeFragment
+    //is done. Add an override to CrimeFragment.onPause() that updates CrimeLab’s copy of your Crime.
+    @Override
+    public void onPause() {
+        super.onPause();
+        CrimeLab.get(getActivity())
+                .updateCrime(mCrime);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState) {
