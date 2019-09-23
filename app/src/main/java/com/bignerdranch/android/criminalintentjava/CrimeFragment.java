@@ -69,27 +69,6 @@ public class CrimeFragment extends Fragment {
                 .updateCrime(mCrime);
     }
 
-    //doesn't work
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_crime_detail, menu);
-
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.delete_crime:
-                Crime crime = new Crime();
-                CrimeLab.get(getActivity()).deleteCrime(crime);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 
 
     @Override
