@@ -228,39 +228,40 @@ public class CrimeFragment extends Fragment {
 // values for
             String[] queryFields = new String[]{
                     ContactsContract.Contacts.DISPLAY_NAME
-            } else if (requestCode == REQUEST_PHOTO) {
-                Uri uri = FileProvider.getUriForFile(getActivity(),
-                        "com.bignerdranch.android.criminalintentjava.fileprovider",
-                        mPhotoFile);
+            };
 
-                getActivity().revokeUriPermission(uri,
-                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                updatePhotoView();
-            }
-
-        }
 // Perform your query - the contactUri is like a "where"
 // clause here
-        Cursor c = getActivity().getContentResolver()
-                .query(contactUri, queryFields, null, null, null);
-        try {
+            Cursor c = getActivity().getContentResolver()
+                    .query(contactUri, queryFields, null, null, null);
+            try {
 // Double-check that you actually got results
-            if (c.getCount() == 0) {
-                return;
-            }
+                if (c.getCount() == 0) {
+                    return;
+                }
 // Pull out the first column of the first row of data -
 // that is your suspect's name
-            c.moveToFirst();
-            String suspect = c.getString(0);
-            mCrime.setSuspect(suspect);
-            mSuspectButton.setText(suspect);
-        } finally {
-            c.close();
+                c.moveToFirst();
+                String suspect = c.getString(0);
+                mCrime.setSuspect(suspect);
+                mSuspectButton.setText(suspect);
+            } finally {
+                c.close();
+            }
         }
+
+        else if (requestCode == REQUEST_PHOTO) {
+            Uri uri = FileProvider.getUriForFile(getActivity(),
+                    "com.bignerdranch.android.criminalintentjava.fileprovider",
+                    mPhotoFile);
+
+            getActivity().revokeUriPermission(uri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            updatePhotoView();
+        }
+
+
     }
-
-
-
 
     //prevent app from crashing if there is no contacts app
 
